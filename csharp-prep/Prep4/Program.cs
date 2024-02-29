@@ -28,7 +28,7 @@ class Program
 
         int largest = numbers.Max();
         int smallest = numbers.Min();
-        int average = total/count;
+        float average = total/count;
         
         Console.WriteLine($"The total sum of the list is {total}");
         Console.WriteLine($"The average of the list is {average}");
