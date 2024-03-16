@@ -8,7 +8,7 @@
 ///                and helping me detect puncuation.
 ///     -- Braydon: gave men the "console.clear()" and underscore idea
 /// 
-/// whats up
+/// 
 using System;
 using System.Collections.Concurrent;
 using System.ComponentModel;
