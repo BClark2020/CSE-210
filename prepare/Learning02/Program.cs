@@ -84,6 +84,8 @@ class Program
         while (i != 1)
         {
             Job job = new Job();
+            
+            
             job._BCjobTitle = job.GetJob();
             if (string.IsNullOrEmpty(job._BCjobTitle))
             {
