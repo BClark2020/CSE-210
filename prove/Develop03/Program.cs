@@ -5,7 +5,8 @@
 /// reasources used:
 ///     --Scripture CSV file: https://scriptures.nephi.org/
 ///     --ChatGPT: Speciffically for parsing information from the CSV file
-///                and helping me detect puncuation.
+///                and helping me detect puncuation. Also helped me find a
+///                way to make key strokes inputs.
 ///
 /// 
 /// 
@@ -258,7 +259,8 @@ class Program
                        _BCend = true;
                        _BCword_drop = _BCword.BC_get_word_drop_rate();
                    }
-                   
+
+
                    else
                    {
                        _BCend = false;
@@ -274,7 +276,7 @@ class Program
         } while( _BCrepeat == true);
 
         Console.Clear();
-        Console.WriteLine("Thank you for using scripture memorizer today!");
+        Console.WriteLine("Thank you for using scripture memorizer app today!");
        
     }
     public bool BC_get_repeat()
@@ -352,7 +354,6 @@ class Program
                 }
             }
     }
-
     public string BC_pause_button_functions()
     {
         string _BCpause = "";
