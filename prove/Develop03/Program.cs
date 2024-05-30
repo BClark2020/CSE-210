@@ -1,12 +1,12 @@
 /// Brenden Clark
 /// Programming with Classes
-/// 3/14/2024
+/// 5/30/2024
 /// 
 /// reasources used:
 ///     --Scripture CSV file: https://scriptures.nephi.org/
 ///     --ChatGPT: Speciffically for parsing information from the CSV file
 ///                and helping me detect puncuation.
-///     -- Braydon: gave men the "console.clear()" and underscore idea
+///
 /// 
 /// 
 using System;
@@ -22,19 +22,16 @@ using System.Runtime.Serialization;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.VisualBasic.FileIO;
 using System.Threading;
+
 class Search
-{
- 
+{ 
     public string BC_get_scripture_cite()
     {   
         Console.WriteLine("Welcome to scripture memorizer!");
         Console.Write("What is the scripture (example: Genesis 1:1): ");
         string _BCscripture_location = Console.ReadLine();
         return _BCscripture_location;
-    }
-
-    
-    
+    }  
     public string BC_get_verse(string _BCscripture_location)
     {
         bool _BCresults = false;
@@ -108,13 +105,33 @@ class Search
 }
 class Word
 {
-    
-    
+    public List<string> _BCremoved_words = new List<string>();
+    public List<int> _BCremoved_indexes = new List<int>();
     public List<string> BC_word_parse(string verse)
     {
         string[] _BCarray = verse.Split(new char[] {' '} , StringSplitOptions.RemoveEmptyEntries);
         List<string> passage = new List<string>(_BCarray);
         return passage;
+    }
+    public List<string> BC_restore_word(List<string> _BCpassage, int _BCword_drop)
+    {
+        
+
+        for (int i = 0; i < _BCword_drop; i++)
+        {  
+            try
+            {
+            int _BClast_index = _BCremoved_words.Count() - 1;
+            _BCpassage[_BCremoved_indexes[_BClast_index]] = _BCremoved_words[_BClast_index];
+            _BCremoved_words.RemoveAt(_BClast_index);
+            _BCremoved_indexes.RemoveAt(_BClast_index);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                return _BCpassage;
+            }
+        }
+        return _BCpassage;
     }
     public List<string> BC_word_removal(List<string> _BCpassage, int _BCword_drop)
     {
@@ -124,6 +141,7 @@ class Word
         string _BCword;
         int _BCrandom_word;
         List<int> _BCindexed_list = new List<int>();
+        
         
         for ( int i = 0; i < _BCword_drop; i++)
            
@@ -141,6 +159,12 @@ class Word
                     {
                         return _BCpassage;
                     }
+                }
+
+                else
+                {
+                    _BCremoved_indexes.Add(_BCrandom_word);
+                    _BCremoved_words.Add(_BCword);
                 }
  
             } while(_BCend != true);
@@ -169,24 +193,15 @@ class Word
     {
         Console.Clear();
         
-        Console.WriteLine("Enter \"end\" to leave.");
-        Console.WriteLine("Press enter to remove a word, and reveal to see the full scripture.\n");
+        Console.WriteLine("Press space to leave.");
+        Console.WriteLine("Press backspace to reveal words.");
+        Console.WriteLine("Press enter to remove a word.\n");
         Console.WriteLine($"{_BCscripture_location}:");
         foreach (string word in _BCpassage)
         {
             Console.Write($"{word} ");
         }
     }   
-    public string BC_reveal_display(string _BCverse, string _BCscripture_location)
-    {
-        Console.Clear();
-        Console.WriteLine("Enter \"end\" to leave.");
-        Console.WriteLine("Press enter to remove a word, and reveal to see the full scripture.\n");
-        Console.WriteLine($"{_BCscripture_location}:");
-        Console.Write(_BCverse + " ");
-        string _BCpause_code = Console.ReadLine();
-        return _BCpause_code;
-    }
     public int BC_get_word_drop_rate()
     {
         Console.Clear();
@@ -212,7 +227,6 @@ class Word
         
         return _BCword_drop;
     }
-
 }
 class Program
 {
@@ -263,7 +277,6 @@ class Program
         Console.WriteLine("Thank you for using scripture memorizer today!");
        
     }
-
     public bool BC_get_repeat()
     {
         bool _BCrepeat = false;
@@ -304,35 +317,33 @@ class Program
 
         return _BCrepeat;
     }
-
     public void BC_run_word_removal(int _BCword_drop, string _BCscripture_location, string _BCverse)
     {
+        Program _BCprogram = new Program();
         Word _BCword = new Word();
         string _BCpause_code = "";
-
         List<string> _BCpassage = new List<string>(_BCword.BC_word_parse(_BCverse));
         int _BCrange = _BCpassage.Count();
+        bool _BCend = false;
 
-            for (int i = 0; i < _BCrange; i += _BCword_drop)
+        while (_BCword._BCremoved_indexes.Count() < _BCpassage.Count() && _BCend != true)
             {
     
                 if (_BCpause_code == "end")
                 {
-                    //finish running the loop//
+                    _BCend = true;
                 }
 
                 else
                 {
                     _BCword.BC_display(_BCpassage, _BCscripture_location);
-                    
-                    Console.Write("");
-                    _BCpause_code = Console.ReadLine();
+                    _BCpause_code = _BCprogram.BC_pause_button_functions();
                 }
                 
 
-                if (_BCpause_code == "reveal" || _BCpause_code == "Reveal")
+                if (_BCpause_code == "reveal")
                 {
-                   _BCpause_code = _BCword.BC_reveal_display(_BCverse, _BCscripture_location);
+                   _BCpassage = _BCword.BC_restore_word(_BCpassage, _BCword_drop);
                 }
 
                 else
@@ -342,6 +353,25 @@ class Program
             }
     }
 
+    public string BC_pause_button_functions()
+    {
+        string _BCpause = "";
+      
+        ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
-
+        if (keyInfo.Key == ConsoleKey.Enter)
+        {
+                _BCpause = "yes";
+        }
+        else if (keyInfo.Key == ConsoleKey.Backspace)
+        {
+            _BCpause = "reveal";
+        }
+        else if (keyInfo.Key == ConsoleKey.Spacebar)
+        {
+            _BCpause = "end";
+        }
+        
+        return _BCpause;
+    }
 }
