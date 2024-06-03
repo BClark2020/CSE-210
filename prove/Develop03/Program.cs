@@ -1,6 +1,6 @@
 /// Brenden Clark
 /// Programming with Classes
-/// 5/30/2024
+/// 6/03/2024
 /// 
 /// reasources used:
 ///     --Scripture CSV file: https://scriptures.nephi.org/
@@ -29,10 +29,10 @@ using System.Runtime.InteropServices;
 
 class Search
 { 
-    public List<int> _BCscripture_range = new List<int>{1}; 
-    public bool _BC_verse_range = false;
-    public string _BCbook;
-    public int _BCverse_int;
+    private List<int> _BCscripture_range = new List<int>{1}; 
+    private bool _BC_verse_range = false;
+    private string _BCbook;
+    private int _BCverse_int;
     public string BC_get_scripture_cite()
     {   
         bool _BCend = false;
