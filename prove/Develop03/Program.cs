@@ -32,6 +32,7 @@ class Search
     public List<int> _BCscripture_range = new List<int>{1}; 
     public bool _BC_verse_range = false;
     public string _BCbook;
+    public int _BCverse_int;
     public string BC_get_scripture_cite()
     {   
         bool _BCend = false;
@@ -48,8 +49,7 @@ class Search
             _BCend = false;
 
 
-            if (_BCscripture_location.Contains("-"))
-            {
+            
     
                 // Regular expression to extract the book, chapter, and verse/range
                 Regex regex = new Regex(@"^(?<BookChapter>[^\d]*\d*[\w\s]* \d+):(?<VerseRange>\d+(-\d+)?)$");
@@ -63,9 +63,13 @@ class Search
                     // Check if it's a range of verses
                     if (verseRange.Contains("-"))
                     {
+                    
+
                         string[] rangeParts = verseRange.Split('-');
                         if (rangeParts.Length == 2 && int.TryParse(rangeParts[0], out int startVerse) && int.TryParse(rangeParts[1], out int endVerse))
                         {
+                            
+
                             if (startVerse > endVerse)
                             {
                                 Console.WriteLine("Invalid verse range. Please enter a valid range.");
@@ -89,24 +93,27 @@ class Search
                     }
                     else if (int.TryParse(verseRange, out int verse))
                     {
+                        _BCverse_int = verse;
                         _BC_verse_range = false;
+                        _BCend = false;
                     }
                     else
                     {
                         Console.WriteLine("Invalid verse. Please enter a valid verse.");
                         _BCend = true;
+                        Thread.Sleep(2500);
                     }
                 }
                 else
                 {
+                
                     Console.WriteLine("Invalid input format. Please enter a reference in the format 'Book Chapter:Verse' or 'Book Chapter:StartVerse-EndVerse'.");
                     Thread.Sleep(2500);
                     _BCend = true;
                 }
-                    }
+            
         } while (_BCend);
      
-        
         return _BCscripture_location;
     }  
     static List<int> GenerateRange(int start, int end)
@@ -118,87 +125,42 @@ class Search
         }
         return numbers;
     }
-    public string BC_get_verse(string _BCscripture_location)
-    {
-        bool _BCresults = false;
-        string _BCverse = "";
-
-        using (TextFieldParser _BCparser = new TextFieldParser("lds-scriptures.csv"))
-        {
-            _BCparser.TextFieldType = FieldType.Delimited;
-            _BCparser.SetDelimiters(",");
-            _BCparser.HasFieldsEnclosedInQuotes = true;
-           
-            while (!_BCparser.EndOfData)
-            {   
-            
-                string[] fields = _BCparser.ReadFields();
-
-                if (fields[17] == _BCscripture_location)
-                {     
-                    _BCverse = fields[16];
-                    _BCresults = true;
-
-                }
-         
-            }
-            if (_BCresults == false)
-            {  
-                Console.WriteLine("Loading...");
-            }
-       
-        }
-
-        
-
-        
-        if (_BCresults == false)
-        {
-            using (TextFieldParser _BCparser = new TextFieldParser("lds-scriptures.csv"))
-            {
-                _BCparser.TextFieldType = FieldType.Delimited;
-                _BCparser.SetDelimiters(",");
-                _BCparser.HasFieldsEnclosedInQuotes = true;
-                
-                while (!_BCparser.EndOfData)
-                {   
-                
-                    string[] fields = _BCparser.ReadFields();
-
-                    if (fields[18] == _BCscripture_location)
-                    {     
-                        _BCverse = fields[16];
-                        _BCresults = true;
-
-                    }
-            
-                }
-                
-            
-            }
-    
-        }
-        
-        if (_BCresults == false)
-        {  
-            Console.WriteLine("Invalid input or scripture doesn't exist, please try again!");
-            _BCverse = "false";
-            Thread.Sleep(2500);
-        }
-        return _BCverse;
-    }
 
     public string BC_get_verses()
     {
         string _BCverse = "";
-        int _BCverse_index = _BCscripture_range.Count() - 1;
+        int _BC_last_verse;
+        int _BC_first_verse; 
         bool _BCresults = false;
         bool _BCindex_18 =  false;
         Console.Clear();
         Console.WriteLine($"Loading:");
-        for (int i = 0; i < _BCscripture_range[_BCverse_index] - _BCscripture_range[0] + 1; i++)
+        int _BC_verse_location;
+        
+
+        if (_BC_verse_range == true)
         {
-            string _BCscripture_location = _BCbook + ":"+ _BCscripture_range[i];
+            _BC_last_verse = _BCscripture_range[_BCscripture_range.Count() - 1];
+            _BC_first_verse = _BCscripture_range[0];
+        }
+        else
+        {
+            _BC_first_verse = _BCverse_int;
+            _BC_last_verse = _BCverse_int;
+        }
+
+        for (int i = 0; i < _BC_last_verse - _BC_first_verse + 1; i++)
+        {
+            if (_BC_verse_range == true)
+            {
+                _BC_verse_location =  _BCscripture_range[i];
+            }
+            else
+            {
+                _BC_verse_location = _BCverse_int;
+            }
+
+            string _BCscripture_location = _BCbook + ":"+ _BC_verse_location;
             
             Console.WriteLine($"{_BCscripture_location}");
 
@@ -418,30 +380,21 @@ class Program
         {
             do
                {
-                   _BCscripture_location = _BCsearch.BC_get_scripture_cite(); 
+                    _BCscripture_location = _BCsearch.BC_get_scripture_cite(); 
 
-                   if (_BCsearch._BC_verse_range == false)
-                   {
-                        _BCverse = _BCsearch.BC_get_verse(_BCscripture_location);
-                   }
-
-                   else
-                   {
-                        _BCverse = _BCsearch.BC_get_verses();
-                   }
-
-                   
-                   if (_BCverse != "false")
-                   { 
-                       _BCend = true;
-                       _BCword_drop = _BCword.BC_get_word_drop_rate();
-                   }
+                    _BCverse = _BCsearch.BC_get_verses();
+                
+                    if (_BCverse != "false")
+                    { 
+                        _BCend = true;
+                        _BCword_drop = _BCword.BC_get_word_drop_rate();
+                    }
 
 
-                   else
-                   {
-                       _BCend = false;
-                   }
+                    else
+                    {
+                        _BCend = false;
+                    }
 
                } while(_BCend == false);
 
