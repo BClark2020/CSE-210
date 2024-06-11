@@ -125,7 +125,6 @@ class Search
         }
         return numbers;
     }
-
     public string BC_get_verses()
     {
         string _BCverse = "";

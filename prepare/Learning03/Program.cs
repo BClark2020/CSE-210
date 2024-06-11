@@ -3,18 +3,38 @@ using System.Reflection.Metadata.Ecma335;
 
 
 
-class Fraction
+public class Fraction
 {
 
     private int _numerator;
     private int _denominator;
-    public void set_bottom(int Denominator = 1)
+
+    public Fraction()
     {
-        _denominator = Denominator;
+        _numerator = 1;
+        _denominator = 1;
     }
-    public void set_top(int Numerator = 1)
+    public Fraction(int _BCwholenumber)
+    {
+        _numerator = _BCwholenumber;
+        _denominator = 1;
+
+    }
+    public Fraction(int Numerator, int Denominator)
     {
         _numerator = Numerator;
+        _denominator = Denominator;
+    }
+
+    public string get_fraction()
+    {
+        string _BCfraction = $"{_numerator}/{_denominator}";
+        return _BCfraction;
+    }
+
+    public double get_decimal()
+    {
+        return (double)_numerator/(double)_denominator;
     }
 }
 
@@ -22,63 +42,22 @@ class Fraction
 class Program
 {
 
-    public int get_top()
-    {
-        int _BCNumerator = '0';
-        bool _BCBool_var = true;
+ static void Main()
+ {
+    Fraction f1 = new Fraction();
+        Console.WriteLine(f1.get_fraction());
+        Console.WriteLine(f1.get_decimal());
 
-        do
-        {
-            try
-            {
-                Console.Write("Numerator: ");
-                _BCNumerator = int.Parse(Console.ReadLine());
-                _BCBool_var = true;
-                
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("PLease enter an integer");
-                _BCBool_var = false;
-            }
+        Fraction f2 = new Fraction(3);
+        Console.WriteLine(f2.get_fraction());
+        Console.WriteLine(f2.get_decimal());
 
-        } while (_BCBool_var == false);
+        Fraction f3 = new Fraction(1, 4);
+        Console.WriteLine(f3.get_fraction());
+        Console.WriteLine(f3.get_decimal());
 
-        return _BCNumerator;
-    }  
-    public int get_bottom()
-    {
-        int _BCDenominator = '1';
-        bool _BCBool_var = true;
-
-        do
-        {
-            try
-            {
-                Console.Write("Denominator: ");
-                _BCDenominator = int.Parse(Console.ReadLine());
-                _BCBool_var = true;
-                
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("PLease enter an integer");
-                _BCBool_var = false;
-            }
-
-        } while (_BCBool_var == false);
-
-        return _BCDenominator;
-    }
-    static void Main(string[] args)
-    {
-        Fraction frac = new Fraction();
-        frac.set_bottom();
-        frac.set_top();
-        
-        Console.WriteLine($"{}");
-
-
-
-    }
+        Fraction f4 = new Fraction(22, 7);
+        Console.WriteLine(f4.get_fraction());
+        Console.WriteLine(f4.get_decimal());
+ }
 }
