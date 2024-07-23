@@ -17,86 +17,86 @@ public class Game
     public static Game game = new Game();
     public static SplitHand split = new SplitHand(); 
     public static SplitHandTwo split2 = new SplitHandTwo();
-    public static int Thee_hand = 1;
-    public int _times_loss = 0;
-    public int _times_won = 0;
-    public int _times_pushed = 0;
+    public static int _theeHand = 1;
+    public int _timeLoss = 0;
+    public int _timeWon = 0;
+    public int _timePushed = 0;
     public int _bet;
-    public bool _split_hand1 = false;
-    public bool _split_hand2 = false;
-    public bool _split_hand3 = false;
-    public bool _split_hand_able = true;
+    public bool _splitHandOne = false;
+    public bool _splitHandTwo = false;
+    public bool _splitHandThree = false;
+    public bool _splitHandBool = true;
     public bool _continue;
     private void StartGame()
     {
-        dealer.Hand = dealer.Hit(dealer.Hand);
-        player.Hand = dealer.Hit(player.Hand);
-        dealer.Hand = dealer.Hit(dealer.Hand);
-        player.Hand = dealer.Hit(player.Hand);  
+        dealer._hand = dealer.Hit(dealer._hand);
+        player._hand = dealer.Hit(player._hand);
+        dealer._hand = dealer.Hit(dealer._hand);
+        player._hand = dealer.Hit(player._hand);  
 
     }
     private void Reset()
     {
-       dealer.Hand.Clear();
-       player.Hand.Clear(); 
+       dealer._hand.Clear();
+       player._hand.Clear(); 
     }
-    public List<string> DoAction(string _action, List<string> player_hand)
+    public List<string> DoAction(string _action, List<string> _playerHand)
     {
         _continue = false;
 
         if (_action == "hit" || _action == "h")
         {
-            player_hand = dealer.Hit(player_hand);
-            deck.CalculateHandValue(player_hand);
-            if (deck.HandValue > 21)
+            _playerHand = dealer.Hit(_playerHand);
+            deck.CalculateHandValue(_playerHand);
+            if (deck._handValue > 21)
             {
                 _continue = false;
-                return player_hand;
+                return _playerHand;
             }
             else
             {
                 _continue = true;
-                return player_hand;
+                return _playerHand;
             }
         }
         else if (_action == "stand")
         {
             _continue = false;
-            return player_hand;
+            return _playerHand;
         }
         else if (_action == "double" || _action == "2x" || _action == "2")
         {
-            player_hand = dealer.Hit(player_hand);
+            _playerHand = dealer.Hit(_playerHand);
             _bet = _bet*2;
             _continue = false;
-            return player_hand;
+            return _playerHand;
         }
         else
         {   
             
 
-            _split_hand1 = true;
-            if(_split_hand1 == true && _split_hand2 != true)
+            _splitHandOne = true;
+            if(_splitHandOne == true && _splitHandTwo != true)
             {
                 
                 split.Main(_bet);
-                _split_hand2 = true;
+                _splitHandTwo = true;
                 _continue = false;
             }
-            else if(_split_hand2 == true && _split_hand3 != true)
+            else if(_splitHandTwo == true && _splitHandThree != true)
             {
-                split2.Main(player_hand);
-                _split_hand3 = true;
+                split2.Main(_playerHand);
+                _splitHandThree = true;
                 _continue = false;
             }
             else
             {
                 SplitHandThree split3 = new SplitHandThree();
-                split3.Main(player_hand);
+                split3.Main(_playerHand);
                 _continue = false;
             }
         }
-        return player_hand;
+        return _playerHand;
 
     }
     private void MainGame()
@@ -106,15 +106,15 @@ public class Game
         bank.GetBank();
         while (end)
         { 
-            _split_hand1 = false;
-            _split_hand2 =  false;
-            _split_hand3 = false;
-            bank.temp_bank = bank._bank;
+            _splitHandOne = false;
+            _splitHandTwo =  false;
+            _splitHandThree = false;
+            bank._tempBank = bank._bank;
             if (bank._bank == 0)
             {
                 return;
             }
-            int round = 0;
+            int _round = 0;
             _bet = bank.GetBet();
             if (_bet == 0)
             {
@@ -123,11 +123,11 @@ public class Game
             Console.Clear();
             StartGame();
             player.CardView(false, _bet);
-            deck.CalculateHandValue(player.Hand);
+            deck.CalculateHandValue(player._hand);
             Thread.Sleep(1000);
-            if(deck.OptionalHandValue == 21)
+            if(deck._optionalHandValue == 21)
             {
-                dealer.run_hand(_bet, player.Hand);
+                dealer.run_hand(_bet, player._hand);
                 Thread.Sleep(3000);
                 Reset();
             }
@@ -136,25 +136,25 @@ public class Game
                 _continue = true;
                 while (_continue)
                 {
-                    round += 1;
-                    string _action = dealer.GetAction(round, _bet, player.Hand);
-                    player.Hand = DoAction(_action, player.Hand);
-                    if(_split_hand1 != true)
+                    _round += 1;
+                    string _action = dealer.GetAction(_round, _bet, player._hand);
+                    player._hand = DoAction(_action, player._hand);
+                    if(_splitHandOne != true)
                     {
                        player.CardView(false, _bet); 
                     }
                 }
-                if (_split_hand1 != true)
+                if (_splitHandOne != true)
                 {
-                    deck.CalculateHandValue(player.Hand);
-                    if (deck.HandValue > 21)
+                    deck.CalculateHandValue(player._hand);
+                    if (deck._handValue > 21)
                     {
                         player.CardView(true, _bet);
                         bank.PlayerBust(_bet);
                     }
                     else
                     {
-                        dealer.run_hand(_bet, player.Hand); 
+                        dealer.run_hand(_bet, player._hand); 
                     }
                 }
                 Reset();
@@ -175,34 +175,34 @@ public class Game
     }
     public void GamesAssessment()
     {
-        Console.WriteLine($"Starting amount: ${bank._starting_bank}");
+        Console.WriteLine($"Starting amount: ${bank._startingBank}");
             Console.WriteLine($"Ending amount: ${bank._bank}");
-            int even = bank._bank - bank._starting_bank;
-            if(even < 0)
+            int _even = bank._bank - bank._startingBank;
+            if(_even < 0)
             {
-                Console.WriteLine($"You are ${-1*even} under even");
+                Console.WriteLine($"You are ${-1*_even} under _even");
             }
-            else if(even>0)
+            else if(_even>0)
             {
-                Console.WriteLine($"You are ${even} over even.");
+                Console.WriteLine($"You are ${_even} over _even.");
             }
-            else if(even == 0)
+            else if(_even == 0)
             {
                 Console.WriteLine($"You are even.");
             }
             Console.WriteLine("\n___________");
             Console.WriteLine($"Total wins: ${bank._wins}");
             Console.WriteLine($"Total losses: ${bank._losses}");
-            Console.WriteLine($"Your largest bank: {bank._largest_bank}");
-            Console.WriteLine($"Your Largest win: {bank._largest_win}");
-            Console.WriteLine($"Your largest loss: {bank._largest_loss}");
-            Console.WriteLine($"Total games played: {game._times_won +game. _times_loss + game._times_pushed}");
-            Console.WriteLine($"Total times won {game._times_won}");
-            Console.WriteLine($"Total times lost: {game._times_loss}");
-            Console.WriteLine($"Total times pushed: {game._times_pushed}");
-            if (game._times_won != 0)
+            Console.WriteLine($"Your largest bank: {bank._largestBank}");
+            Console.WriteLine($"Your Largest win: {bank._largestWin}");
+            Console.WriteLine($"Your largest loss: {bank._largestLoss}");
+            Console.WriteLine($"Total games played: {game._timeWon +game. _timeLoss + game._timePushed}");
+            Console.WriteLine($"Total times won {game._timeWon}");
+            Console.WriteLine($"Total times lost: {game._timeLoss}");
+            Console.WriteLine($"Total times pushed: {game._timePushed}");
+            if (game._timeWon != 0)
             {
-                Console.WriteLine($"Win/loss ratio: {game._times_won/game._times_won}/{game._times_loss/game._times_won}");
+                Console.WriteLine($"Win/loss ratio: {game._timeWon/game._timeWon}/{game._timeLoss/game._timeWon}");
             }
     }
 }

@@ -1,8 +1,8 @@
 public class Deck
 {
-    public int HandValue { get; private set; }
-    public int OptionalHandValue { get; private set; }
-    public bool Ace { get; private set; }
+    public int _handValue { get; private set; }
+    public int _optionalHandValue { get; private set; }
+    public bool _ace { get; private set; }
     public List<string> ShuffledDeck { get; private set; }
     private List<string> deck;
     private Random random = new Random();
@@ -81,46 +81,46 @@ public class Deck
         newDeck.AddRange(topHalf);
         return newDeck;
     }
-    public void CalculateHandValue(List<string> hand)
+    public void CalculateHandValue(List<string> _hand)
     {
-        HandValue = 0;
-        OptionalHandValue = 0;
-        Ace = false;
-        int aces = 0;
-        foreach (string card in hand)
+        _handValue = 0;
+        _optionalHandValue = 0;
+        _ace = false;
+        int _aces = 0;
+        foreach (string _card in _hand)
         {
-            if ((card == "A♠" || card == "A♦" || card == "A♥" || card == "A♣") && aces == 0 )
+            if ((_card == "A♠" || _card == "A♦" || _card == "A♥" || _card == "A♣") && _aces == 0 )
             {
-                Ace = true;
-                aces ++;
+                _ace = true;
+                _aces ++;
             }
-            else if(card == "A♠" || card == "A♦" || card == "A♥" || card == "A♣" && aces >= 1)
+            else if(_card == "A♠" || _card == "A♦" || _card == "A♥" || _card == "A♣" && _aces >= 1)
             {
-                HandValue += 1;
-                OptionalHandValue += 1;
+                _handValue += 1;
+                _optionalHandValue += 1;
             }
             else
             {
-                HandValue += HandValues[card];
-                OptionalHandValue += HandValues[card];
+                _handValue += _handValues[_card];
+                _optionalHandValue += _handValues[_card];
             }
         }
-        if (Ace == true)
+        if (_ace == true)
         {
-            if (HandValue + 11 > 21)
+            if (_handValue + 11 > 21)
             {
-                HandValue += 1;
-                Ace = false;
+                _handValue += 1;
+                _ace = false;
             }
             else
             {   
-                OptionalHandValue += 11;
-                HandValue += 1;
-                Ace = true;
+                _optionalHandValue += 11;
+                _handValue += 1;
+                _ace = true;
             }
         }
     }
-    public readonly Dictionary<string, int> HandValues = new Dictionary<string, int>
+    public readonly Dictionary<string, int> _handValues = new Dictionary<string, int>
     {
         {"A♠", 1}, { "2♠", 2 }, { "3♠", 3 }, { "4♠", 4 }, { "5♠", 5 }, { "6♠", 6 }, { "7♠", 7 }, { "8♠", 8 }, { "9♠", 9 }, { "10♠", 10 }, { "J♠", 10 }, { "Q♠", 10 }, { "K♠", 10 },
         {"A♦", 1}, { "2♦", 2 }, { "3♦", 3 }, { "4♦", 4 }, { "5♦", 5 }, { "6♦", 6 }, { "7♦", 7 }, { "8♦", 8 }, { "9♦", 9 }, { "10♦", 10 }, { "J♦", 10 }, { "Q♦", 10 }, { "K♦", 10 },

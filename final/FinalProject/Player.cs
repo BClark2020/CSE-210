@@ -1,19 +1,18 @@
 public class Player : Game
 {
-    
-    public List<string> Hand = new List<string>();
-    public void CardView(bool dealer_display, int _bet)
+    public List<string> _hand = new List<string>();
+    public void CardView(bool _dealerDisplay, int _bet)
     {
         Console.Clear();
-        if (dealer_display == false)
+        if (_dealerDisplay == false)
         {
             int counter = 0;
-            foreach (string card in dealer.Hand)
+            foreach (string _card in dealer._hand)
             {
                 counter += 1;
                 if (counter == 1)
                 {
-                    Console.Write(card + " ");
+                    Console.Write(_card + " ");
                 }
                 else
                 {
@@ -23,26 +22,26 @@ public class Player : Game
         }
         else
         {
-            foreach (string card in dealer.Hand)
+            foreach (string _card in dealer._hand)
             {
-                Console.Write(card + " ");
+                Console.Write(_card + " ");
             }
-            deck.CalculateHandValue(dealer.Hand);
-            Console. WriteLine($"Value {deck.HandValue}");
+            deck.CalculateHandValue(dealer._hand);
+            Console. WriteLine($"Value {deck._handValue}");
         }
         Console.WriteLine("\n\n\n");
-        deck.CalculateHandValue(Hand);
-        foreach (string card in Hand)
+        deck.CalculateHandValue(_hand);
+        foreach (string _card in _hand)
         {
-            Console.Write(card + " ");
+            Console.Write(_card + " ");
         }
-        if (deck.Ace)
+        if (deck._ace)
         {
-            Console.Write($"    Value: {deck.HandValue}/{deck.OptionalHandValue}");
+            Console.Write($"    Value: {deck._handValue}/{deck._optionalHandValue}");
         }
         else
         {
-            Console.Write($"    Value: {deck.HandValue}");
+            Console.Write($"    Value: {deck._handValue}");
         }
         Console.WriteLine($"\nBet: {_bet}");
     }

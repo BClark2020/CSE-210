@@ -1,42 +1,41 @@
 public class Dealer : Game
 {
-    public List<string> Hand = new List<string>();
-    private int TOP_CARD = 0;
-    public List<string> Hit(List<string> temp_hand)
+    public List<string> _hand = new List<string>();
+    public List<string> Hit(List<string> _tempHand)
     {   
-        bool bool_var = false;
+        bool _boolVar = false;
         do
         {
             try
             {
-                temp_hand.Add(deck.ShuffledDeck[TOP_CARD]);
-                deck.ShuffledDeck.RemoveAt(TOP_CARD);
-                bool_var = false;
+                _tempHand.Add(deck.ShuffledDeck[0]);
+                deck.ShuffledDeck.RemoveAt(0);
+                _boolVar = false;
             }
             catch (ArgumentOutOfRangeException)
             {
                 deck.ShuffleDeck();
-                bool_var = true;
+                _boolVar = true;
             }
-        }while(bool_var);
-        return temp_hand;
+        }while(_boolVar);
+        return _tempHand;
     }
-    public string GetAction(int round, int _bet, List<string> player_hand)
+    public string GetAction(int _round, int _bet, List<string> _playerHand)
     {
         string _action = " ";
-        bool bool_var = false;
+        bool _boolVar = false;
         do
         {
-            if (round == 1)
+            if (_round == 1)
             {
-                _action = round_one_options(_bet, player_hand);
+                _action = round_one_options(_bet, _playerHand);
                 return _action;
             }
             else
             {
             
                 {
-                    bool bool_var_2 = false;
+                    bool _boolVarTwo = false;
                     do
                     {
                         Console.Write("Hit, Stand  ");
@@ -44,26 +43,26 @@ public class Dealer : Game
                         _action = _action.ToLower();
                         if (_action == "hit" || _action == "stand"|| _action == "h")
                         {
-                            bool_var_2 = false;
+                            _boolVarTwo = false;
                             return _action;
                         }
                         else
                         {
-                            bool_var_2 = true;
+                            _boolVarTwo = true;
                         }
-                    }while(bool_var_2);
+                    }while(_boolVarTwo);
                 }
             }
-        }while (bool_var);
+        }while (_boolVar);
         return _action;
     }
-    private string round_one_options(int _bet, List<string> player_hand)
+    private string round_one_options(int _bet, List<string> _playerHand)
     {
        string _action = " ";
-        if (deck.HandValues[player_hand[0]] == deck.HandValues[player_hand[1]] && game._split_hand_able == true && _bet <= bank.temp_bank)//////////////////////////////////////////
+        if (deck._handValues[_playerHand[0]] == deck._handValues[_playerHand[1]] && game._splitHandBool == true && _bet <= bank._tempBank)//////////////////////////////////////////
         {
             
-            bool bool_var = false;
+            bool _boolVar = false;
             do
             {   
     
@@ -72,24 +71,24 @@ public class Dealer : Game
                _action = _action.ToLower();
                if (_action == "hit" || _action == "stand" || _action == "split" || _action == "double" || _action == "2x" || _action == "2" || _action == "h" || _action == "stay")
                {
-                   bool_var = false;
+                   _boolVar = false;
                    if (_action == "split" || _action == "double" || _action == "2x" || _action == "2")
                    {
-                       bank.temp_bank -=_bet;
+                       bank._tempBank -=_bet;
                    }
                
                    return _action;
                }
                else
                {
-                   bool_var = true;
+                   _boolVar = true;
                }
-            }while(bool_var);
+            }while(_boolVar);
             
         }
-        else if (_bet <= bank.temp_bank)
+        else if (_bet <= bank._tempBank)
         {
-            bool bool_var = false;
+            bool _boolVar = false;
             do
             {
                 Console.Write("Hit, Stand, Double: ");
@@ -97,22 +96,22 @@ public class Dealer : Game
                 _action = _action.ToLower();
                 if (_action == "hit" || _action == "stand"|| _action == "double" || _action == "x2" || _action == "2" || _action == "h" || _action == "stay")
                 {
-                    bool_var = false;
+                    _boolVar = false;
                     if (_action == "split" || _action == "double" || _action == "2x" || _action == "2")
                     {
-                        bank.temp_bank -=_bet;
+                        bank._tempBank -=_bet;
                     }
                     return _action;
                 }
                 else
                 {
-                    bool_var = true;
+                    _boolVar = true;
                 }
-            }while(bool_var);
+            }while(_boolVar);
         }
         else
         {
-            bool bool_var = false;
+            bool _boolVar = false;
             do
             {
                 Console.Write("Hit, Stand: ");
@@ -120,33 +119,33 @@ public class Dealer : Game
                 _action = _action.ToLower();
                 if (_action == "hit" || _action == "stand"|| _action == "h")
                 {
-                    bool_var = false;
+                    _boolVar = false;
                     return _action;
                 }
                 else
                 {
-                    bool_var = true;
+                    _boolVar = true;
                 }
-            }while(bool_var);
+            }while(_boolVar);
         }
         return _action;
     }
-    public void run_hand(int _bet, List<string> player_hand)
+    public void run_hand(int _bet, List<string> _playerHand)
     {
         player.CardView(true, _bet);
         Thread.Sleep(1000);
-        deck.CalculateHandValue(Hand);
-        while (deck.HandValue < 17)
+        deck.CalculateHandValue(_hand);
+        while (deck._handValue < 17)
         {
-            Hand = Hit(Hand);
+            _hand = Hit(_hand);
             player.CardView(true, _bet);
             Thread.Sleep(1000);
-            deck.CalculateHandValue(Hand);
+            deck.CalculateHandValue(_hand);
         }
-        if(deck.HandValue > 21)
+        if(deck._handValue > 21)
         {
-            deck.CalculateHandValue(player.Hand);
-            if (deck.HandValue == 21 || deck.OptionalHandValue == 21)
+            deck.CalculateHandValue(player._hand);
+            if (deck._handValue == 21 || deck._optionalHandValue == 21)
             {
                 bank.BlackJackWin(_bet);
             }
@@ -158,26 +157,26 @@ public class Dealer : Game
         }
         else
         {
-            CompareHands(_bet, dealer.Hand, player_hand);
+            CompareHands(_bet, dealer._hand, _playerHand);
         }
     }
-    private void CompareHands(int _bet, List<string> dealer_hand, List<string> player_hand)
+    private void CompareHands(int _bet, List<string> _dealerrHand, List<string> _playerHand)
     {
-        deck.CalculateHandValue(dealer_hand);
-        int dealer_value = deck.HandValue;
-        deck.CalculateHandValue(player_hand);
-        int player_value = 0;
-        if (deck.OptionalHandValue > deck.HandValue && deck.OptionalHandValue <= 21)
+        deck.CalculateHandValue(_dealerrHand);
+        int _dealerValue = deck._handValue;
+        deck.CalculateHandValue(_playerHand);
+        int _playerValue = 0;
+        if (deck._optionalHandValue > deck._handValue && deck._optionalHandValue <= 21)
         {
-            player_value = deck.OptionalHandValue;
+            _playerValue = deck._optionalHandValue;
         }
         else
         {
-            player_value = deck.HandValue;
+            _playerValue = deck._handValue;
         }
-        if (dealer_value < player_value)
+        if (_dealerValue < _playerValue)
         {
-            if (player_value == 21)
+            if (_playerValue == 21)
             {
                 bank.BlackJackWin(_bet);
             }
@@ -186,11 +185,11 @@ public class Dealer : Game
                 bank.PlayerWin(_bet);
             }
         }
-        else if(dealer_value == player_value)
+        else if(_dealerValue == _playerValue)
         {
             bank.PlayerPush();
         }
-        else if(dealer_value > player_value)
+        else if(_dealerValue > _playerValue)
         {
             bank.PLayerLoss(_bet);
         }

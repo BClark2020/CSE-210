@@ -1,13 +1,13 @@
 public class SplitHand : Game
 {
-    public List<string> Split_hand0 = new List<string>();
-    public List<string> Split_hand1 = new List<string>();
+    public List<string> _handOne = new List<string>();
+    public List<string> _handTwo = new List<string>();
     public int hand0_bet;
-    public int hand1_bet;
+    public int _handOneBet;
     public void Main(int _bet)
     {
-        game._split_hand2 = true;
-        int round = 0;
+        game._splitHandTwo = true;
+        int _round = 0;
         Console.Clear();
         MakeHands(_bet);
         DisplayTwoHands(false, 0);
@@ -15,42 +15,42 @@ public class SplitHand : Game
         game._continue = true;
         while (game._continue)
         {
-            round += 1;
-            string _action = dealer.GetAction(round, _bet, Split_hand0);
+            _round += 1;
+            string _action = dealer.GetAction(_round, _bet, _handOne);
             if (_action == "double" || _action == "2x" || _action == "2")
             {
                 hand0_bet += hand0_bet;
             }
-            Thee_hand = 1; 
-            Split_hand0 = game.DoAction(_action, Split_hand0);
+            _theeHand = 1; 
+            _handOne = game.DoAction(_action, _handOne);
             if (_action == "split")
             {
                 return;
             }
-            Thee_hand = 2;
+            _theeHand = 2;
             if (game._continue == true)
             {
                 DisplayTwoHands(false, 0);
             }
         }
-        round = 0;
+        _round = 0;
         DisplayTwoHands(false, 1);
         game._continue = true;
         while (game._continue)
         {
-            round += 1;
-            string _action = dealer.GetAction(round, _bet, Split_hand1);
+            _round += 1;
+            string _action = dealer.GetAction(_round, _bet, _handTwo);
             if (_action == "double" || _action == "2x" || _action == "2")
             {
-                hand1_bet += hand1_bet;
+                _handOneBet += _handOneBet;
             }
-            Thee_hand = 2; 
-            Split_hand1 = game.DoAction(_action, Split_hand1);
+            _theeHand = 2; 
+            _handTwo = game.DoAction(_action, _handTwo);
             if (_action == "split")
             {
                 return;
             }
-            Thee_hand = 3;
+            _theeHand = 3;
             if (game._continue == true)
             {
                 DisplayTwoHands(false, 1);
@@ -58,43 +58,43 @@ public class SplitHand : Game
         }
         DisplayTwoHands(false, 1);
         RunTwoHands();   
-        Thee_hand = 3;  
+        _theeHand = 3;  
     }
-    public void MakeHands(int _bet)
+    private void MakeHands(int _bet)
     {
-        Split_hand0.Clear();
-        Split_hand1.Clear();
-        Split_hand0.Add(player.Hand[0]);
-        Split_hand1.Add(player.Hand[1]);
-        Split_hand0 = dealer.Hit(Split_hand0);
-        Split_hand1 = dealer.Hit(Split_hand1);
+        _handOne.Clear();
+        _handTwo.Clear();
+        _handOne.Add(player._hand[0]);
+        _handTwo.Add(player._hand[1]);
+        _handOne = dealer.Hit(_handOne);
+        _handTwo = dealer.Hit(_handTwo);
         hand0_bet = _bet;
-        hand1_bet = _bet;
+        _handOneBet = _bet;
     }
-    public void RunTwoHands()
+    private void RunTwoHands()
     {
         RunDealerHandOnly();
         DisplayDealerOnly(true);
-        DisplayOneHand(Split_hand0, hand0_bet);
-        CompareHands(hand0_bet, dealer.Hand, Split_hand0);
+        DisplayOneHand(_handOne, hand0_bet);
+        CompareHands(hand0_bet, dealer._hand, _handOne);
         Console.WriteLine("\n");
-        DisplayOneHand(Split_hand1, hand1_bet);
+        DisplayOneHand(_handTwo, _handOneBet);
         Thread.Sleep(2000);
-        CompareHands(hand1_bet, dealer.Hand, Split_hand1);
+        CompareHands(_handOneBet, dealer._hand, _handTwo);
         Thread.Sleep(2000);
     }
-    public void DisplayDealerOnly(bool dealer_display)
+    public void DisplayDealerOnly(bool _dealerDisplay)
     {
         Console.Clear();
-        if (dealer_display == false)
+        if (_dealerDisplay == false)
         {
             int counter = 0;
-            foreach (string card in dealer.Hand)
+            foreach (string _card in dealer._hand)
             {
                 counter += 1;
                 if (counter == 1)
                 {
-                    Console.Write(card + " ");
+                    Console.Write(_card + " ");
                 }
                 else
                 {
@@ -104,35 +104,35 @@ public class SplitHand : Game
         }
         else
         {
-            foreach (string card in dealer.Hand)
+            foreach (string _card in dealer._hand)
             {
-                Console.Write(card + " ");
+                Console.Write(_card + " ");
             }
-            deck.CalculateHandValue(dealer.Hand);
-            Console. WriteLine($"Value {deck.HandValue}");
+            deck.CalculateHandValue(dealer._hand);
+            Console. WriteLine($"Value {deck._handValue}");
             Console.WriteLine("\n\n\n");
         }
     }
-    public void DisplayOneHand(List<string> display_hand, int _bet)
+    public void DisplayOneHand(List<string> _displayHand, int _bet)
     {
-        deck.CalculateHandValue(display_hand);
-        foreach (string card in display_hand)
+        deck.CalculateHandValue(_displayHand);
+        foreach (string _card in _displayHand)
         {
-            Console.Write(card + " ");
+            Console.Write(_card + " ");
         }
-        if (deck.Ace)
+        if (deck._ace)
         {
-            Console.Write($"    Value: {deck.HandValue}/{deck.OptionalHandValue}");
+            Console.Write($"    Value: {deck._handValue}/{deck._optionalHandValue}");
         }
         else
         {
-            Console.Write($"    Value: {deck.HandValue}");
+            Console.Write($"    Value: {deck._handValue}");
         }
         Console.WriteLine($"\nBet: {_bet}");
     }
-    public void DisplayTwoHands(bool dealer_display, int current_hand)
+    private void DisplayTwoHands(bool _dealerDisplay, int current_hand)
     {
-        DisplayDealerOnly(dealer_display);
+        DisplayDealerOnly(_dealerDisplay);
         Console.WriteLine("\n\n\n");
         if(current_hand == 0)
         {
@@ -142,7 +142,7 @@ public class SplitHand : Game
         {
             Console.WriteLine("Hand 1");
         }
-        DisplayOneHand(Split_hand0,hand0_bet);
+        DisplayOneHand(_handOne,hand0_bet);
         Console.WriteLine("\n");
         if(current_hand == 1)
         {
@@ -152,42 +152,42 @@ public class SplitHand : Game
         {
             Console.WriteLine("Hand 2");
         }
-        DisplayOneHand(Split_hand1, hand1_bet);
+        DisplayOneHand(_handTwo, _handOneBet);
     }
     public void RunDealerHandOnly()
     {
         DisplayTwoHands(true, -1);
         Thread.Sleep(1000);
-        deck.CalculateHandValue(dealer.Hand);
-        while (deck.HandValue < 17)
+        deck.CalculateHandValue(dealer._hand);
+        while (deck._handValue < 17)
         {
-            dealer.Hand = dealer.Hit(dealer.Hand);
+            dealer._hand = dealer.Hit(dealer._hand);
             DisplayTwoHands(true, -1);
             Thread.Sleep(1000);
-            deck.CalculateHandValue(dealer.Hand);
+            deck.CalculateHandValue(dealer._hand);
         }
     }
-    public void CompareHands(int _bet, List<string> dealer_hand, List<string> player_hand)
+    public void CompareHands(int _bet, List<string> _dealerrHand, List<string> _playerHand)
     {
-        deck.CalculateHandValue(dealer_hand);
-        int dealer_value = deck.HandValue;
-        deck.CalculateHandValue(player_hand);
-        int player_value = 0;
-        if (deck.OptionalHandValue > deck.HandValue && deck.OptionalHandValue <= 21)
+        deck.CalculateHandValue(_dealerrHand);
+        int _dealerValue = deck._handValue;
+        deck.CalculateHandValue(_playerHand);
+        int _playerValue = 0;
+        if (deck._optionalHandValue > deck._handValue && deck._optionalHandValue <= 21)
         {
-            player_value = deck.OptionalHandValue;
+            _playerValue = deck._optionalHandValue;
         }
         else
         {
-            player_value = deck.HandValue;
+            _playerValue = deck._handValue;
         }
-        if (dealer_value < player_value)
+        if (_dealerValue < _playerValue)
         {
-            if (player_value == 21)
+            if (_playerValue == 21)
             {
                 bank.BlackJackWin(_bet);
             }
-            else if (player_value > 21)
+            else if (_playerValue > 21)
             {
                 bank.PlayerBust(_bet);
             }
@@ -196,9 +196,9 @@ public class SplitHand : Game
                 bank.PlayerWin(_bet);
             }
         }
-        else if(dealer_value == player_value)
+        else if(_dealerValue == _playerValue)
         {
-            if (player_value > 21)
+            if (_playerValue > 21)
             {
                 bank.PlayerBust(_bet);
             }
@@ -208,17 +208,17 @@ public class SplitHand : Game
             }
             
         }
-        else if(dealer_value > player_value)
+        else if(_dealerValue > _playerValue)
         {
-            if (player_value == 21)
+            if (_playerValue == 21)
             {
                 bank.BlackJackWin(_bet);
             }
-            else if (player_value > 21)
+            else if (_playerValue > 21)
             {
                 bank.PlayerBust(_bet);
             }
-            else if (dealer_value > 21)
+            else if (_dealerValue > 21)
             {
                 bank.DealerBust(_bet);
             }
