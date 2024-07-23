@@ -1,6 +1,6 @@
 public class Hand : Game
 {
-     public void DisplayDealerOnly(bool _dealerDisplay)
+    public void DisplayDealerOnly(bool _dealerDisplay)
     {
         Console.Clear();
         if (_dealerDisplay == false)
@@ -26,11 +26,10 @@ public class Hand : Game
                 Console.Write(_card + " ");
             }
             deck.CalculateHandValue(dealer._hand);
-            Console. WriteLine($"Value {deck._handValue}");
+            Console.WriteLine($"Value {deck._handValue}");
             Console.WriteLine("\n\n\n");
         }
     }
-
     public void DisplayOneHand(List<string> _displayHand, int _bet)
     {
         deck.CalculateHandValue(_displayHand);
@@ -77,7 +76,7 @@ public class Hand : Game
                 bank.PlayerWin(_bet);
             }
         }
-        else if(_dealerValue == _playerValue)
+        else if (_dealerValue == _playerValue)
         {
             if (_playerValue > 21)
             {
@@ -87,9 +86,9 @@ public class Hand : Game
             {
                 bank.PlayerPush();
             }
-            
+
         }
-        else if(_dealerValue > _playerValue)
+        else if (_dealerValue > _playerValue)
         {
             if (_playerValue == 21)
             {

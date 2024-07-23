@@ -2,7 +2,7 @@ public class Dealer : Game
 {
     public List<string> _hand = new List<string>();
     public List<string> Hit(List<string> _tempHand)
-    {   
+    {
         bool _boolVar = false;
         do
         {
@@ -17,7 +17,7 @@ public class Dealer : Game
                 deck.ShuffleDeck();
                 _boolVar = true;
             }
-        }while(_boolVar);
+        } while (_boolVar);
         return _tempHand;
     }
     public string GetAction(int _round, int _bet, List<string> _playerHand)
@@ -33,7 +33,7 @@ public class Dealer : Game
             }
             else
             {
-            
+
                 {
                     bool _boolVarTwo = false;
                     do
@@ -41,7 +41,7 @@ public class Dealer : Game
                         Console.Write("Hit, Stand  ");
                         _action = Console.ReadLine();
                         _action = _action.ToLower();
-                        if (_action == "hit" || _action == "stand"|| _action == "h")
+                        if (_action == "hit" || _action == "stand" || _action == "h")
                         {
                             _boolVarTwo = false;
                             return _action;
@@ -50,41 +50,41 @@ public class Dealer : Game
                         {
                             _boolVarTwo = true;
                         }
-                    }while(_boolVarTwo);
+                    } while (_boolVarTwo);
                 }
             }
-        }while (_boolVar);
+        } while (_boolVar);
         return _action;
     }
     private string round_one_options(int _bet, List<string> _playerHand)
     {
-       string _action = " ";
+        string _action = " ";
         if (deck._handValues[_playerHand[0]] == deck._handValues[_playerHand[1]] && game._splitHandBool == true && _bet <= bank._tempBank)//////////////////////////////////////////
         {
-            
+
             bool _boolVar = false;
             do
-            {   
-    
-               Console.Write("Hit, Stand, Split, Double: ");
-               _action = Console.ReadLine();
-               _action = _action.ToLower();
-               if (_action == "hit" || _action == "stand" || _action == "split" || _action == "double" || _action == "2x" || _action == "2" || _action == "h")
-               {
-                   _boolVar = false;
-                   if (_action == "split" || _action == "double" || _action == "2x" || _action == "2")
-                   {
-                       bank._tempBank -=_bet;
-                   }
-               
-                   return _action;
-               }
-               else
-               {
-                   _boolVar = true;
-               }
-            }while(_boolVar);
-            
+            {
+
+                Console.Write("Hit, Stand, Split, Double: ");
+                _action = Console.ReadLine();
+                _action = _action.ToLower();
+                if (_action == "hit" || _action == "stand" || _action == "split" || _action == "double" || _action == "2x" || _action == "2" || _action == "h")
+                {
+                    _boolVar = false;
+                    if (_action == "split" || _action == "double" || _action == "2x" || _action == "2")
+                    {
+                        bank._tempBank -= _bet;
+                    }
+
+                    return _action;
+                }
+                else
+                {
+                    _boolVar = true;
+                }
+            } while (_boolVar);
+
         }
         else if (_bet <= bank._tempBank)
         {
@@ -94,12 +94,12 @@ public class Dealer : Game
                 Console.Write("Hit, Stand, Double: ");
                 _action = Console.ReadLine();
                 _action = _action.ToLower();
-                if (_action == "hit" || _action == "stand"|| _action == "double" || _action == "x2" || _action == "2" || _action == "h")
+                if (_action == "hit" || _action == "stand" || _action == "double" || _action == "x2" || _action == "2" || _action == "h")
                 {
                     _boolVar = false;
                     if (_action == "split" || _action == "double" || _action == "2x" || _action == "2")
                     {
-                        bank._tempBank -=_bet;
+                        bank._tempBank -= _bet;
                     }
                     return _action;
                 }
@@ -107,7 +107,7 @@ public class Dealer : Game
                 {
                     _boolVar = true;
                 }
-            }while(_boolVar);
+            } while (_boolVar);
         }
         else
         {
@@ -117,7 +117,7 @@ public class Dealer : Game
                 Console.Write("Hit, Stand: ");
                 _action = Console.ReadLine();
                 _action = _action.ToLower();
-                if (_action == "hit" || _action == "stand"|| _action == "h")
+                if (_action == "hit" || _action == "stand" || _action == "h")
                 {
                     _boolVar = false;
                     return _action;
@@ -126,7 +126,7 @@ public class Dealer : Game
                 {
                     _boolVar = true;
                 }
-            }while(_boolVar);
+            } while (_boolVar);
         }
         return _action;
     }
@@ -142,7 +142,7 @@ public class Dealer : Game
             Thread.Sleep(1000);
             deck.CalculateHandValue(_hand);
         }
-        if(deck._handValue > 21)
+        if (deck._handValue > 21)
         {
             deck.CalculateHandValue(player._hand);
             if (deck._handValue == 21 || deck._optionalHandValue == 21)
@@ -153,7 +153,7 @@ public class Dealer : Game
             {
                 bank.DealerBust(_bet);
             }
-            
+
         }
         else
         {
@@ -185,11 +185,11 @@ public class Dealer : Game
                 bank.PlayerWin(_bet);
             }
         }
-        else if(_dealerValue == _playerValue)
+        else if (_dealerValue == _playerValue)
         {
             bank.PlayerPush();
         }
-        else if(_dealerValue > _playerValue)
+        else if (_dealerValue > _playerValue)
         {
             bank.PLayerLoss(_bet);
         }

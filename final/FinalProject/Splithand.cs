@@ -21,7 +21,7 @@ public class SplitHand : Hand
             {
                 hand0_bet += hand0_bet;
             }
-            _theeHand = 1; 
+            _theeHand = 1;
             _handOne = game.DoAction(_action, _handOne);
             if (_action == "split")
             {
@@ -44,7 +44,7 @@ public class SplitHand : Hand
             {
                 _handOneBet += _handOneBet;
             }
-            _theeHand = 2; 
+            _theeHand = 2;
             _handTwo = game.DoAction(_action, _handTwo);
             if (_action == "split")
             {
@@ -57,8 +57,8 @@ public class SplitHand : Hand
             }
         }
         DisplayTwoHands(false, 1);
-        RunTwoHands();   
-        _theeHand = 3;  
+        RunTwoHands();
+        _theeHand = 3;
     }
     private void MakeHands(int _bet)
     {
@@ -87,17 +87,17 @@ public class SplitHand : Hand
     {
         DisplayDealerOnly(_dealerDisplay);
         Console.WriteLine("\n\n\n");
-        if(current_hand == 0)
+        if (current_hand == 0)
         {
             Console.WriteLine("CURRENT HAND");
         }
-        else if(current_hand == 1)
+        else if (current_hand == 1)
         {
             Console.WriteLine("Hand 1");
         }
-        DisplayOneHand(_handOne,hand0_bet);
+        DisplayOneHand(_handOne, hand0_bet);
         Console.WriteLine("\n");
-        if(current_hand == 1)
+        if (current_hand == 1)
         {
             Console.WriteLine("CURRENT HAND");
         }

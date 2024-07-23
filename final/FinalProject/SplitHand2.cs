@@ -17,7 +17,7 @@ public class SplitHandTwo : Hand
             _bet = split.hand0_bet;
         }
         else
-        {   
+        {
             _handOneBet = split.hand0_bet;
             _handOne = split._handOne;
             _bet = split._handOneBet;
@@ -26,87 +26,87 @@ public class SplitHandTwo : Hand
         Console.Clear();
         _handTwo = createHands(splitting_hand, _bet);
         game._continue = true;
-        
+
         if (_theeHand == 1)
         {
-        DisplayThreeHands(false,3);
-        while (game._continue)
+            DisplayThreeHands(false, 3);
+            while (game._continue)
+            {
+                _round += 1;
+                string _action = dealer.GetAction(_round, _handOneBet, _handOne);
+                if (_action == "double" || _action == "2x" || _action == "2")
+                {
+                    _handOneBet += _handOneBet;
+                }
+                _theeHand = 1;
+                _handOne = game.DoAction(_action, _handOne);
+                if (_action == "split")
+                {
+                    return;
+                }
+                _theeHand = 2;
+                if (game._continue == true)
+                {
+                    DisplayThreeHands(false, 1);
+                }
+            }
+        }
+        if (_theeHand == 2)
         {
-            _round += 1;
-            string _action = dealer.GetAction(_round, _handOneBet, _handOne);
-            if (_action == "double" || _action == "2x" || _action == "2")
+            _round = 0;
+            DisplayThreeHands(false, 2);
+            game._continue = true;
+            while (game._continue)
             {
-                _handOneBet += _handOneBet;
-            }
-            _theeHand = 1;
-            _handOne = game.DoAction(_action, _handOne);
-            if (_action == "split")
-            {
-                return;
-            }
-            _theeHand = 2;
-            if (game._continue == true)
-            {
-                DisplayThreeHands(false, 1);
+                _round += 1;
+                string _action = dealer.GetAction(_round, _bet, _handTwo);
+                if (_action == "double" || _action == "2x" || _action == "2")
+                {
+                    _handTwoBet += _handTwoBet;
+                }
+                _theeHand = 2;
+                _handTwo = game.DoAction(_action, _handTwo);
+                if (_action == "split")
+                {
+                    return;
+                }
+                _theeHand = 3;
+                if (game._continue == true)
+                {
+                    DisplayThreeHands(false, 2);
+                }
             }
         }
-        }
-        if (_theeHand== 2)
+        if (_theeHand == 3)
         {
-        _round = 0;
-        DisplayThreeHands(false,2);
-        game._continue = true;
-        while (game._continue)
-        {
-            _round += 1;
-            string _action = dealer.GetAction(_round, _bet, _handTwo);
-            if (_action == "double" || _action == "2x" || _action == "2")
+            _round = 0;
+            DisplayThreeHands(false, 3);
+            game._continue = true;
+            while (game._continue)
             {
-                _handTwoBet += _handTwoBet;
-            }
-            _theeHand = 2;
-            _handTwo = game.DoAction(_action, _handTwo);
-            if (_action == "split")
-            {
-                return;
-            }
-            _theeHand = 3;
-            if (game._continue == true)
-            {
-                DisplayThreeHands(false, 2);
-            }
-        }
-        }
-        if (_theeHand== 3)
-        {
-        _round = 0;
-        DisplayThreeHands(false,3);
-        game._continue = true;
-        while (game._continue)
-        {
-            _round += 1;
-            string _action = dealer.GetAction(_round, _bet, _handThree);
-            if (_action == "double" || _action == "2x" || _action == "2")
-            {
-                _handThreeBet += _handThreeBet;
-            }
-            _theeHand = 3;
-            _handThree = game.DoAction(_action, _handThree);
-            if (_action == "split")
-            {
-                return;
-            }
-            _theeHand = 4;
-            if (game._continue == true)
-            {
-                DisplayThreeHands(false, 3);
+                _round += 1;
+                string _action = dealer.GetAction(_round, _bet, _handThree);
+                if (_action == "double" || _action == "2x" || _action == "2")
+                {
+                    _handThreeBet += _handThreeBet;
+                }
+                _theeHand = 3;
+                _handThree = game.DoAction(_action, _handThree);
+                if (_action == "split")
+                {
+                    return;
+                }
+                _theeHand = 4;
+                if (game._continue == true)
+                {
+                    DisplayThreeHands(false, 3);
+                }
             }
         }
-        }
-    
-        RunThreeHands();  
+
+        RunThreeHands();
         Thread.Sleep(3000);
-        
+
     }
     private List<string> createHands(List<string> splitting_hand, int _bet)
     {
@@ -125,7 +125,7 @@ public class SplitHandTwo : Hand
     {
         split.DisplayDealerOnly(_dealerDisplay);
         Console.WriteLine("\n\n\n");
-        if(current_hand == 1)
+        if (current_hand == 1)
         {
             Console.WriteLine("CURRENT HAND");
         }
@@ -135,7 +135,7 @@ public class SplitHandTwo : Hand
         }
         split.DisplayOneHand(_handOne, _handOneBet);
         Console.WriteLine("\n");
-        if(current_hand == 2)
+        if (current_hand == 2)
         {
             Console.WriteLine("CURRENT HAND");
         }
@@ -145,7 +145,7 @@ public class SplitHandTwo : Hand
         }
         split.DisplayOneHand(_handTwo, _handTwoBet);
         Console.WriteLine("\n");
-        if(current_hand == 3)
+        if (current_hand == 3)
         {
             Console.WriteLine("CURRENT HAND");
         }
@@ -154,7 +154,7 @@ public class SplitHandTwo : Hand
             Console.WriteLine("Hand 3");
         }
         split.DisplayOneHand(_handThree, _handThreeBet);
-     
+
     }
     private void RunThreeHands()
     {

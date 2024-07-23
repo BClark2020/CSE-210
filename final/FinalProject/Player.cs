@@ -27,7 +27,7 @@ public class Player : Game
                 Console.Write(_card + " ");
             }
             deck.CalculateHandValue(dealer._hand);
-            Console. WriteLine($"Value {deck._handValue}");
+            Console.WriteLine($"Value {deck._handValue}");
         }
         Console.WriteLine("\n\n\n");
         deck.CalculateHandValue(_hand);

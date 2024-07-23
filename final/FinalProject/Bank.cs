@@ -14,27 +14,28 @@ public class Bank : Game
         Console.WriteLine("Welcome to the table,\nMinimum bet is 10 and maximum bet is 500");
         bool _boolVar = false;
         do
-       { try
         {
-            Console.Write("How much are you buying in for: ");
-            _bank = int.Parse(Console.ReadLine());
-            _startingBank = _bank;
-            if (_bank < 10)
+            try
             {
-                Console.WriteLine("You need to buy in for more than 10 dollars.");
+                Console.Write("How much are you buying in for: ");
+                _bank = int.Parse(Console.ReadLine());
+                _startingBank = _bank;
+                if (_bank < 10)
+                {
+                    Console.WriteLine("You need to buy in for more than 10 dollars.");
+                    _boolVar = true;
+                }
+                else
+                {
+                    _boolVar = false;
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Please enter an integer");
                 _boolVar = true;
             }
-            else
-            {
-                _boolVar = false;
-            }
-        }
-        catch (Exception)
-        {
-            Console.WriteLine("Please enter an integer");
-            _boolVar = true;
-        }
-        }while(_boolVar);
+        } while (_boolVar);
     }
     public int GetBet()
     {
@@ -43,40 +44,41 @@ public class Bank : Game
         Console.WriteLine("Enter \"leave\" to end the game.");
         bool _boolVar = false;
         do
-       { try
         {
-            Console.WriteLine($"Bank: {_bank}");
-            Console.Write("How much do you want to bet: ");
-            string _string_bet = Console.ReadLine();
-            if (_string_bet == "leave")
+            try
             {
-                return 0;
+                Console.WriteLine($"Bank: {_bank}");
+                Console.Write("How much do you want to bet: ");
+                string _string_bet = Console.ReadLine();
+                if (_string_bet == "leave")
+                {
+                    return 0;
+                }
+                else
+                {
+                    _bet = int.Parse(_string_bet);
+                }
+                if (_bet < 10 || _bet > 500)
+                {
+                    Console.WriteLine("Please enter a bet between 10 and 500 dollars.");
+                    _boolVar = true;
+                }
+                else if (_bet > _bank)
+                {
+                    Console.WriteLine("You dont have enough money to place this bet.");
+                    _boolVar = true;
+                }
+                else
+                {
+                    _boolVar = false;
+                }
             }
-            else
+            catch (Exception)
             {
-                _bet = int.Parse(_string_bet);
-            }
-            if (_bet < 10 || _bet > 500)
-            {
-                Console.WriteLine("Please enter a bet between 10 and 500 dollars.");
+                Console.WriteLine("Please enter an integer");
                 _boolVar = true;
             }
-            else if (_bet > _bank)
-            {
-                Console.WriteLine("You dont have enough money to place this bet.");
-                _boolVar = true;
-            }
-            else
-            {
-                _boolVar = false;
-            }
-        }
-        catch (Exception)
-        {
-            Console.WriteLine("Please enter an integer");
-            _boolVar = true;
-        }
-        }while(_boolVar);
+        } while (_boolVar);
         _tempBank -= _bet;
         return _bet;
     }
@@ -104,23 +106,23 @@ public class Bank : Game
     {
         Console.WriteLine("PUSH");
         game._timePushed += 1;
-        
+
     }
     public void BlackJackWin(int _bet)
     {
         Console.WriteLine("BLACKJACK!!!!");
-        int _extra = _bet + (_bet/2);
+        int _extra = _bet + (_bet / 2);
         WinLoss(_extra, true);
     }
     private void WinLoss(int _bet, bool win)
     {
-        if(win == true)
+        if (win == true)
         {
-            game._timeWon+=1;
+            game._timeWon += 1;
             Console.WriteLine($"+${_bet}");
             _bank += _bet;
             _wins += _bet;
-            if(_bet > _largestWin)
+            if (_bet > _largestWin)
             {
                 _largestWin = _bet;
             }
@@ -131,11 +133,11 @@ public class Bank : Game
         }
         else if (win == false)
         {
-            game._timeLoss+=1;
+            game._timeLoss += 1;
             Console.WriteLine($"-${_bet}");
             _bank -= _bet;
             _losses -= _bet;
-            if(_bet > _largestLoss)
+            if (_bet > _largestLoss)
             {
                 _largestLoss = _bet;
             }

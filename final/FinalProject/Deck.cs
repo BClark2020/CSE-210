@@ -72,7 +72,7 @@ public class Deck
     }
     private List<string> Cut(List<string> deck)
     {
-        int cutter =  random.Next(2, 6);
+        int cutter = random.Next(2, 6);
         int cutPoint = deck.Count / cutter;
         List<string> topHalf = deck.Take(cutPoint).ToList();
         List<string> bottomHalf = deck.Skip(cutPoint).ToList();
@@ -89,12 +89,12 @@ public class Deck
         int _aces = 0;
         foreach (string _card in _hand)
         {
-            if ((_card == "A♠" || _card == "A♦" || _card == "A♥" || _card == "A♣") && _aces == 0 )
+            if ((_card == "A♠" || _card == "A♦" || _card == "A♥" || _card == "A♣") && _aces == 0)
             {
                 _ace = true;
-                _aces ++;
+                _aces++;
             }
-            else if(_card == "A♠" || _card == "A♦" || _card == "A♥" || _card == "A♣" && _aces >= 1)
+            else if (_card == "A♠" || _card == "A♦" || _card == "A♥" || _card == "A♣" && _aces >= 1)
             {
                 _handValue += 1;
                 _optionalHandValue += 1;
@@ -113,7 +113,7 @@ public class Deck
                 _ace = false;
             }
             else
-            {   
+            {
                 _optionalHandValue += 11;
                 _handValue += 1;
                 _ace = true;
