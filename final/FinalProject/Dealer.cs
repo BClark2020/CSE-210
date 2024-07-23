@@ -69,7 +69,7 @@ public class Dealer : Game
                Console.Write("Hit, Stand, Split, Double: ");
                _action = Console.ReadLine();
                _action = _action.ToLower();
-               if (_action == "hit" || _action == "stand" || _action == "split" || _action == "double" || _action == "2x" || _action == "2" || _action == "h" || _action == "stay")
+               if (_action == "hit" || _action == "stand" || _action == "split" || _action == "double" || _action == "2x" || _action == "2" || _action == "h")
                {
                    _boolVar = false;
                    if (_action == "split" || _action == "double" || _action == "2x" || _action == "2")
@@ -94,7 +94,7 @@ public class Dealer : Game
                 Console.Write("Hit, Stand, Double: ");
                 _action = Console.ReadLine();
                 _action = _action.ToLower();
-                if (_action == "hit" || _action == "stand"|| _action == "double" || _action == "x2" || _action == "2" || _action == "h" || _action == "stay")
+                if (_action == "hit" || _action == "stand"|| _action == "double" || _action == "x2" || _action == "2" || _action == "h")
                 {
                     _boolVar = false;
                     if (_action == "split" || _action == "double" || _action == "2x" || _action == "2")

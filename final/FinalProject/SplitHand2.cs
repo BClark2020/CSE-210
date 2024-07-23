@@ -1,4 +1,4 @@
-public class SplitHandTwo : Game
+public class SplitHandTwo : Hand
 {
     public List<string> _handOne = new List<string>();
     public List<string> _handTwo = new List<string>();

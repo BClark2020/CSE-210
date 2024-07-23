@@ -1,4 +1,4 @@
-public class SplitHandThree : Game
+public class SplitHandThree : Hand
 {
     private List<string> _handOne = new List<string>();
     private List<string> _handTwo = new List<string>();
