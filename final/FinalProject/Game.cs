@@ -202,8 +202,8 @@ public class Game
             Console.WriteLine($"Total times pushed: {game._timePushed}");
             if (game._timeWon != 0)
             {
-                float _lossingRatio = game._timeLoss/game._timeWon;
-                Console.WriteLine($"Win/loss ratio: {game._timeWon/game._timeWon}/{_lossingRatio}");
+                float _losingRatio = game._timeLoss/game._timeWon;
+                Console.WriteLine($"Win/loss ratio: {game._timeWon/game._timeWon}/{_losingRatio}");
             }
     }
 }
