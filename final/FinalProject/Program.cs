@@ -27,7 +27,6 @@ class Game
     private bool _split_hand3 = false;
     private bool _split_hand_able = true;
     private bool _continue;
-
     private void StartGame()
     {
         dealer.Hand = dealer.Hit(dealer.Hand);
@@ -36,13 +35,11 @@ class Game
         player.Hand = dealer.Hit(player.Hand);  
 
     }
-
     private void Reset()
     {
        dealer.Hand.Clear();
        player.Hand.Clear(); 
     }
-
     private List<string> DoAction(string _action, List<string> player_hand)
     {
         _continue = false;
@@ -102,7 +99,6 @@ class Game
         return player_hand;
 
     }
-
     private void MainGame()
     {
         bool end = true;
@@ -177,7 +173,6 @@ class Game
         game.GamesAssessment();
         Console.WriteLine("Thank you for playing!!");
     }
-
     public void GamesAssessment()
     {
         Console.WriteLine($"Starting amount: ${bank._starting_bank}");
@@ -209,16 +204,12 @@ class Game
             {
                 Console.WriteLine($"Win/loss ratio: {game._times_won/game._times_won}/{game._times_loss/game._times_won}");
             }
-            
-        
     }
 
     public class Dealer
     {
         public List<string> Hand = new List<string>();
         private int TOP_CARD = 0;
-
-
         public List<string> Hit(List<string> temp_hand)
         {   
             bool bool_var = false;
@@ -238,7 +229,6 @@ class Game
             }while(bool_var);
             return temp_hand;
         }
-
         public string GetAction(int round, int _bet, List<string> player_hand)
         {
 
@@ -279,7 +269,6 @@ class Game
             }while (bool_var);
             return _action;
         }
-
         private string round_one_options(int _bet, List<string> player_hand)
         {
            string _action = " ";
@@ -355,7 +344,6 @@ class Game
             }
             return _action;
         }
-
         public void run_hand(int _bet, List<string> player_hand)
         {
             player.CardView(true, _bet);
@@ -388,7 +376,6 @@ class Game
             }
 
         }
-
         private void CompareHands(int _bet, List<string> dealer_hand, List<string> player_hand)
         {
             deck.CalculateHandValue(dealer_hand);
@@ -424,22 +411,16 @@ class Game
                 bank.PLayerLoss(_bet);
             }
         }
-
     }
-
     public class Bank
     {
-
         public int _bank;
         public int temp_bank;
         public int _largest_win = 0;
-
         public int _largest_bank;
-
         public int _largest_loss;
         public int _losses;
         public int _wins;
-
         public int _starting_bank;
         public void GetBank()
         {
@@ -471,7 +452,6 @@ class Game
             }while(bool_var);
 
         }
-
         public int GetBet()
         {
 
@@ -519,46 +499,38 @@ class Game
             temp_bank -= _bet;
             return _bet;
         }
-
         public void PlayerBust(int _bet)
         {
             Console.WriteLine("BUST");
             WinLoss(_bet, false);
         }
-
         public void PLayerLoss(int _bet)
         {
             Console.WriteLine("LOSS TO DEALER");
             WinLoss(_bet, false);
         }
-
         public void PlayerWin(int _bet)
         {
             Console.WriteLine("WINNER");
             WinLoss(_bet, true);
         }
-
         public void DealerBust(int _bet)
         {
             Console.WriteLine("DEALER BUST");
             WinLoss(_bet, true);
-
         }
-
         public void PlayerPush()
         {
             Console.WriteLine("PUSH");
             game._times_pushed += 1;
             
         }
-
         public void BlackJackWin(int _bet)
         {
             Console.WriteLine("BLACKJACK!!!!");
             int extra = _bet + (_bet/2);
             WinLoss(extra, true);
         }
-
         private void WinLoss(int _bet, bool win)
         {
             if(win == true)
@@ -592,7 +564,6 @@ class Game
         }
 
     }
-
     public class Deck
     {
         public int HandValue { get; private set; }
@@ -600,6 +571,7 @@ class Game
         public bool Ace { get; private set; }
         public List<string> ShuffledDeck { get; private set; }
         private List<string> deck;
+        private Random random = new Random();
 
         public Deck()
         {
@@ -645,7 +617,6 @@ class Game
             ShuffledDeck = new List<string>(deck);
             ShuffleDeck();
         }
-
         public void ShuffleDeck()
         {
             ShuffledDeck = new List<string>(deck);
@@ -654,7 +625,6 @@ class Game
             ShuffledDeck = Cut(ShuffledDeck);
             Shuffle(ShuffledDeck);
         }
-
         private static void Shuffle(List<string> deck)
         {
             Random rand = new Random();
@@ -668,20 +638,18 @@ class Game
                 deck[j] = temp;
             }
         }
-
-        private static List<string> Cut(List<string> deck)
+        private List<string> Cut(List<string> deck)
         {
-            int cutPoint = deck.Count / 2;
+            int cutter =  random.Next(2, 6);
+            int cutPoint = deck.Count / cutter;
             List<string> topHalf = deck.Take(cutPoint).ToList();
             List<string> bottomHalf = deck.Skip(cutPoint).ToList();
             List<string> newDeck = new List<string>();
-
             newDeck.AddRange(bottomHalf);
             newDeck.AddRange(topHalf);
 
             return newDeck;
         }
-
         public void CalculateHandValue(List<string> hand)
         {
             HandValue = 0;
@@ -722,7 +690,6 @@ class Game
                 }
             }
         }
-
         public readonly Dictionary<string, int> HandValues = new Dictionary<string, int>
         {
             {"A♠", 1}, { "2♠", 2 }, { "3♠", 3 }, { "4♠", 4 }, { "5♠", 5 }, { "6♠", 6 }, { "7♠", 7 }, { "8♠", 8 }, { "9♠", 9 }, { "10♠", 10 }, { "J♠", 10 }, { "Q♠", 10 }, { "K♠", 10 },
@@ -731,7 +698,6 @@ class Game
             {"A♣", 1}, { "2♣", 2 }, { "3♣", 3 }, { "4♣", 4 }, { "5♣", 5 }, { "6♣", 6 }, { "7♣", 7 }, { "8♣", 8 }, { "9♣", 9 }, { "10♣", 10 }, { "J♣", 10 }, { "Q♣", 10 }, { "K♣", 10 }
         };
     }
-
     public class Player
     {
         
@@ -784,7 +750,6 @@ class Game
             Console.WriteLine($"\nBet: {_bet}");
         }
     }
-
     public class SplitHand
     {
         public List<string> Split_hand0 = new List<string>();
@@ -1021,7 +986,6 @@ class Game
             }
         }
     }
-
     public class SplitHandTwo
     {
         public List<string> hand1 = new List<string>();
@@ -1221,7 +1185,6 @@ class Game
 
         }
     }
-
     public class SplitHandThree
     {
         public List<string> hand1 = new List<string>();
