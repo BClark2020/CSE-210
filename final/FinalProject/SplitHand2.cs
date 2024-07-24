@@ -6,10 +6,11 @@ public class SplitHandTwo : Hand
     public int _handOneBet;
     public int _handTwoBet;
     public int _handThreeBet;
-    public override void Main(List<string> _splittingHand)
+    public override void Main(int _bet, List<string> _splittingHand)
     {
-        game._splitHandThree = true;
-        int _bet = 0;
+        game._splitHandTwo = false;
+		game._splitHandThree = true;
+        _bet = 0;
         if (split._handOne == _splittingHand)
         {
             _handOneBet = split._handOneBet;
@@ -29,7 +30,7 @@ public class SplitHandTwo : Hand
 
         if (_theeHand == 1)
         {
-            DisplayHands(false, 3);
+            DisplayHands(false, 1);
             while (game._continue)
             {
                 _round += 1;

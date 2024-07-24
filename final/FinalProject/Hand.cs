@@ -108,7 +108,7 @@ public class Hand : Game
 		}
 	}
 
-	public virtual void Main(List<string> _splittingHand)
+	public virtual void Main(int _bet, List<string> _splittingHand)
 	{
 
 	}

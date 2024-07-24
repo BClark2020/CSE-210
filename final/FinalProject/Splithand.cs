@@ -4,9 +4,10 @@ public class SplitHand : Hand
 	public List<string> _handTwo = new List<string>();
 	public int hand0_bet;
 	public int _handOneBet;
-	public override void Main(List<string> _splittingHand)
+	public override void Main(int _bet, List<string> _splittingHand)
 	{
-		int _bet = game._bet;
+		game._splitHandOne = false;
+		game._splitHandTwo = true;
 		int _round = 0;
 		Console.Clear();
 		CreateHands(_splittingHand, _bet);

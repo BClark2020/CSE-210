@@ -8,6 +8,18 @@ using System.Security.AccessControl;
 using System.Threading;
 using System.Transactions;
 
+class Program
+{
+	public static void Main()
+	{
+		Console.Clear();
+		Game game = new Game();
+		game.MainGame();
+		Console.Clear();
+		game.GamesAssessment();
+		Console.WriteLine("Thank you for playing!!");
+	}
+}
 public class Game
 {
 	public static Dealer dealer = new Dealer();
@@ -35,7 +47,6 @@ public class Game
 		player._hand = dealer.Hit(player._hand);
 		dealer._hand = dealer.Hit(dealer._hand);
 		player._hand = dealer.Hit(player._hand);
-
 	}
 	private void Reset()
 	{
@@ -49,7 +60,7 @@ public class Game
 	
 	private void SplitHands(Hand _handClass)
 	{
-		_handClass.Main(player._hand);
+		_handClass.Main(_bet, player._hand);
 	}
 		
 
@@ -89,35 +100,31 @@ public class Game
 		{
 			if (_splitHandOne == true)
 			{
-				SplitHands(split);
 				_splitHandOne = false;
 				_splitHandTwo = true;
+				SplitHands(split);
 			}
 			else if (_splitHandTwo == true)
 			{
-				SplitHands(split2);
 				_splitHandTwo = false;
 				_splitHandThree = true;
+				SplitHands(split2);
 			}
 
 			else if (_splitHandThree == true)
 			{
 				SplitHands(split3);
-				_splitHandBool = false;
 			}
 		}
 		return _playerHand;
 	}
-	private void MainGame()
+	public void MainGame()
 	{
 		bool end = true;
 		deck.ShuffleDeck();
 		bank.GetBank();
 		while (end)
 		{
-			_splitHandOne = false;
-			_splitHandTwo = false;
-			_splitHandThree = false;
 			bank._tempBank = bank._bank;
 			if (bank._bank == 0)
 			{
@@ -148,12 +155,12 @@ public class Game
 					_round += 1;
 					string _action = dealer.GetAction(_round, _bet, player._hand);
 					player._hand = DoAction(_action, player._hand);
-					if (_splitHandOne != true)
+					if (_splitHandOne == true && _splitHandTwo  == false && _splitHandThree == false)
 					{
 						player.CardView(false, _bet);
 					}
 				}
-				if (_splitHandOne != true)
+				if (_splitHandOne == true && _splitHandTwo  == false && _splitHandThree == false)
 				{
 					deck.CalculateHandValue(player._hand);
 					if (deck._handValue > 21)
@@ -172,16 +179,6 @@ public class Game
 
 		}
 	}
-	public static void Main()
-	{
-
-		Console.Clear();
-		Game game = new Game();
-		game.MainGame();
-		Console.Clear();
-		game.GamesAssessment();
-		Console.WriteLine("Thank you for playing!!");
-	}
 	public void GamesAssessment()
 	{
 		Console.WriteLine($"Starting amount: ${bank._startingBank}");
@@ -189,11 +186,11 @@ public class Game
 		int _even = bank._bank - bank._startingBank;
 		if (_even < 0)
 		{
-			Console.WriteLine($"You are ${-1 * _even} under _even");
+			Console.WriteLine($"You are ${-1 * _even} under even");
 		}
 		else if (_even > 0)
 		{
-			Console.WriteLine($"You are ${_even} over _even.");
+			Console.WriteLine($"You are ${_even} over even.");
 		}
 		else if (_even == 0)
 		{
