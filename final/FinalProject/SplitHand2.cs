@@ -6,11 +6,11 @@ public class SplitHandTwo : Hand
     public int _handOneBet;
     public int _handTwoBet;
     public int _handThreeBet;
-    public void Main(List<string> splitting_hand)
+    public override void Main(List<string> _splittingHand)
     {
         game._splitHandThree = true;
         int _bet = 0;
-        if (split._handOne == splitting_hand)
+        if (split._handOne == _splittingHand)
         {
             _handOneBet = split._handOneBet;
             _handOne = split._handTwo;
@@ -24,12 +24,12 @@ public class SplitHandTwo : Hand
         }
         int _round = 0;
         Console.Clear();
-        _handTwo = createHands(splitting_hand, _bet);
+        _handTwo = createHands(_splittingHand, _bet);
         game._continue = true;
 
         if (_theeHand == 1)
         {
-            DisplayThreeHands(false, 3);
+            DisplayHands(false, 3);
             while (game._continue)
             {
                 _round += 1;
@@ -47,14 +47,14 @@ public class SplitHandTwo : Hand
                 _theeHand = 2;
                 if (game._continue == true)
                 {
-                    DisplayThreeHands(false, 1);
+                    DisplayHands(false, 1);
                 }
             }
         }
         if (_theeHand == 2)
         {
             _round = 0;
-            DisplayThreeHands(false, 2);
+            DisplayHands(false, 2);
             game._continue = true;
             while (game._continue)
             {
@@ -73,14 +73,14 @@ public class SplitHandTwo : Hand
                 _theeHand = 3;
                 if (game._continue == true)
                 {
-                    DisplayThreeHands(false, 2);
+                    DisplayHands(false, 2);
                 }
             }
         }
         if (_theeHand == 3)
         {
             _round = 0;
-            DisplayThreeHands(false, 3);
+            DisplayHands(false, 3);
             game._continue = true;
             while (game._continue)
             {
@@ -99,29 +99,29 @@ public class SplitHandTwo : Hand
                 _theeHand = 4;
                 if (game._continue == true)
                 {
-                    DisplayThreeHands(false, 3);
+                    DisplayHands(false, 3);
                 }
             }
         }
 
-        RunThreeHands();
+        RunHands();
         Thread.Sleep(3000);
 
     }
-    private List<string> createHands(List<string> splitting_hand, int _bet)
+    private List<string> createHands(List<string> _splittingHand, int _bet)
     {
-        string first_card = splitting_hand[0];
-        string second_card = splitting_hand[1];
-        splitting_hand.Clear();
-        splitting_hand.Add(first_card);
-        splitting_hand = dealer.Hit(splitting_hand);
+        string first_card = _splittingHand[0];
+        string second_card = _splittingHand[1];
+        _splittingHand.Clear();
+        _splittingHand.Add(first_card);
+        _splittingHand = dealer.Hit(_splittingHand);
         _handThree.Add(second_card);
         _handThree = dealer.Hit(_handThree);
         _handThreeBet = _bet;
         _handTwoBet = _bet;
-        return splitting_hand;
+        return _splittingHand;
     }
-    private void DisplayThreeHands(bool _dealerDisplay, int current_hand)
+    private void DisplayHands(bool _dealerDisplay, int current_hand)
     {
         split.DisplayDealerOnly(_dealerDisplay);
         Console.WriteLine("\n\n\n");
@@ -156,7 +156,7 @@ public class SplitHandTwo : Hand
         split.DisplayOneHand(_handThree, _handThreeBet);
 
     }
-    private void RunThreeHands()
+    private void RunHands()
     {
         RunDealerHandOnly();
         split.DisplayDealerOnly(true);
@@ -177,13 +177,13 @@ public class SplitHandTwo : Hand
     }
     private void RunDealerHandOnly()
     {
-        DisplayThreeHands(true, -1);
+        DisplayHands(true, -1);
         Thread.Sleep(1000);
         deck.CalculateHandValue(dealer._hand);
         while (deck._handValue < 17)
         {
             dealer._hand = dealer.Hit(dealer._hand);
-            DisplayThreeHands(true, -1);
+            DisplayHands(true, -1);
             Thread.Sleep(1000);
             deck.CalculateHandValue(dealer._hand);
         }

@@ -17,12 +17,14 @@ public class Game
 	public static Game game = new Game();
 	public static SplitHand split = new SplitHand();
 	public static SplitHandTwo split2 = new SplitHandTwo();
+	public static SplitHandThree split3 = new SplitHandThree();
+	public static Hand _handClass = new Hand();
 	public static int _theeHand = 1;
 	public int _timeLoss = 0;
 	public int _timeWon = 0;
 	public int _timePushed = 0;
 	public int _bet;
-	public bool _splitHandOne = false;
+	public bool _splitHandOne = true;
 	public bool _splitHandTwo = false;
 	public bool _splitHandThree = false;
 	public bool _splitHandBool = true;
@@ -39,7 +41,19 @@ public class Game
 	{
 		dealer._hand.Clear();
 		player._hand.Clear();
+		_splitHandOne = true;
+		_splitHandTwo = false;
+		_splitHandThree = false;
+		_splitHandBool = true;
 	}
+	
+	private void SplitHands(Hand _handClass)
+	{
+		_handClass.Main(player._hand);
+	}
+		
+
+	
 	public List<string> DoAction(string _action, List<string> _playerHand)
 	{
 		_continue = false;
@@ -73,31 +87,26 @@ public class Game
 		}
 		else
 		{
-
-
-			_splitHandOne = true;
-			if (_splitHandOne == true && _splitHandTwo != true)
+			if (_splitHandOne == true)
 			{
-
-				split.Main(_bet);
+				SplitHands(split);
+				_splitHandOne = false;
 				_splitHandTwo = true;
-				_continue = false;
 			}
-			else if (_splitHandTwo == true && _splitHandThree != true)
+			else if (_splitHandTwo == true)
 			{
-				split2.Main(_playerHand);
+				SplitHands(split2);
+				_splitHandTwo = false;
 				_splitHandThree = true;
-				_continue = false;
 			}
-			else
+
+			else if (_splitHandThree == true)
 			{
-				SplitHandThree split3 = new SplitHandThree();
-				split3.Main(_playerHand);
-				_continue = false;
+				SplitHands(split3);
+				_splitHandBool = false;
 			}
 		}
 		return _playerHand;
-
 	}
 	private void MainGame()
 	{
