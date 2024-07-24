@@ -9,7 +9,7 @@ public class SplitHandTwo : Hand
     public override void Main(int _bet, List<string> _splittingHand)
     {
         game._splitHandTwo = false;
-		game._splitHandThree = true;
+        game._splitHandThree = true;
         _bet = 0;
         if (split._handOne == _splittingHand)
         {

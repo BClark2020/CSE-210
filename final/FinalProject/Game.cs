@@ -46,7 +46,7 @@ public class Game
 		dealer._hand = dealer.Hit(dealer._hand);
 		player._hand = dealer.Hit(player._hand);
 		dealer._hand = dealer.Hit(dealer._hand);
-		player._hand = dealer.Hit(player._hand);	
+		player._hand = dealer.Hit(player._hand);
 	}
 	private void Reset()
 	{
@@ -57,14 +57,14 @@ public class Game
 		_splitHandThree = false;
 		_splitHandBool = true;
 	}
-	
+
 	private void SplitHands(Hand _handClass, List<string> _splittingHand)
 	{
 		_handClass.Main(_bet, _splittingHand);
 	}
-		
 
-	
+
+
 	public List<string> DoAction(string _action, List<string> _playerHand)
 	{
 		_continue = false;
@@ -155,12 +155,12 @@ public class Game
 					_round += 1;
 					string _action = dealer.GetAction(_round, _bet, player._hand);
 					player._hand = DoAction(_action, player._hand);
-					if (_splitHandOne == true && _splitHandTwo  == false && _splitHandThree == false)
+					if (_splitHandOne == true && _splitHandTwo == false && _splitHandThree == false)
 					{
 						player.CardView(false, _bet);
 					}
 				}
-				if (_splitHandOne == true && _splitHandTwo  == false && _splitHandThree == false)
+				if (_splitHandOne == true && _splitHandTwo == false && _splitHandThree == false)
 				{
 					deck.CalculateHandValue(player._hand);
 					if (deck._handValue > 21)
