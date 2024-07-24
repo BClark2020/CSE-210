@@ -46,7 +46,7 @@ public class Game
 		dealer._hand = dealer.Hit(dealer._hand);
 		player._hand = dealer.Hit(player._hand);
 		dealer._hand = dealer.Hit(dealer._hand);
-		player._hand = dealer.Hit(player._hand);
+		player._hand = dealer.Hit(player._hand);	
 	}
 	private void Reset()
 	{
@@ -58,9 +58,9 @@ public class Game
 		_splitHandBool = true;
 	}
 	
-	private void SplitHands(Hand _handClass)
+	private void SplitHands(Hand _handClass, List<string> _splittingHand)
 	{
-		_handClass.Main(_bet, player._hand);
+		_handClass.Main(_bet, _splittingHand);
 	}
 		
 
@@ -102,18 +102,18 @@ public class Game
 			{
 				_splitHandOne = false;
 				_splitHandTwo = true;
-				SplitHands(split);
+				SplitHands(split, _playerHand);
 			}
 			else if (_splitHandTwo == true)
 			{
 				_splitHandTwo = false;
 				_splitHandThree = true;
-				SplitHands(split2);
+				SplitHands(split2, _playerHand);
 			}
 
 			else if (_splitHandThree == true)
 			{
-				SplitHands(split3);
+				SplitHands(split3, _playerHand);
 			}
 		}
 		return _playerHand;

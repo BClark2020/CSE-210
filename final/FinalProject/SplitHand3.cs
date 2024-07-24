@@ -129,7 +129,7 @@ public class SplitHandThree : Hand
 
 		RunHands();
 		Thread.Sleep(3000);
-
+		game._splitHandBool = true;
 	}
 	private void DisplayHands(bool _dealerDisplay, int current_hand)
 	{
